@@ -1,3 +1,9 @@
+const dotenv = require('dotenv')
+
+if (process.env.NODE_ENV !== 'production') {
+    dotenv.config()
+}
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Starter Blog`,
@@ -18,7 +24,14 @@ module.exports = {
         path: `${__dirname}/content/blog`,
         name: `blog`,
       },
-    },
+      },
+      {
+          resolve: `gatsby-source-contentful`,
+          options: {
+              spaceId: `jzcej6441gmt`,
+              accessToken: process.env.CONTENTFUL_ACCESS_TOKEN
+          }
+      },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -49,12 +62,14 @@ module.exports = {
       },
     },
     `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+      `gatsby-plugin-sharp`,
+      `gatsby-plugin-sass`, 
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         //trackingId: `ADD YOUR TRACKING ID HERE`,
-      },
+           },
+
     },
     `gatsby-plugin-feed`,
     {
@@ -67,7 +82,8 @@ module.exports = {
         theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `content/assets/gatsby-icon.png`,
-      },
+        },
+
     },
     `gatsby-plugin-react-helmet`,
     // this (optional) plugin enables Progressive Web App + Offline functionality
